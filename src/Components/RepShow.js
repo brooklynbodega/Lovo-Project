@@ -70,20 +70,22 @@ class RepShow extends Component {
     return (
       <div className="RepShow">
         {/* Ryan assisted with rendering my representatives to the page */}
-        <div className="RepresentativeContainer">
-          <img alt={representative.id} className='representativeImage' src={`http://bioguide.congress.gov/bioguide/photo/${this.props.member.replace('.json', '').charAt(0)}/${this.props.member.replace('.json', '')}.jpg`} />
-          <h3>{representative.first_name} {representative.last_name}</h3>
-          <p>{representative.current_party}</p>
-          <p>{representative.title}</p>
+        <div className="RepContainer">
+          <div className="RepImage">
+            <img alt={representative.id} src={`http://bioguide.congress.gov/bioguide/photo/${this.props.member.replace('.json', '').charAt(0)}/${this.props.member.replace('.json', '')}.jpg`} />
+          </div>
           {/* Ryan also assisted in putting my roles to the page */}
-          <p>{
+          {
             (roles !== null) && (
-              <div>
-                <p>{roles.state}</p>
+              <div className="RepDetails">
+          <h3>
+          {representative.first_name} {representative.last_name} ({representative.current_party}-{roles.state})
+          </h3>
                 <p>{roles.title}</p>
                 <p>{roles.phone}</p>
                 <div className="icons">
-                <p><SocialIcon url={`${roles.contact_form}`} />
+                <p>
+                  <SocialIcon url={`${roles.contact_form}`} />
                 </p>
                 <p>
                   <SocialIcon url={`https://twitter.com/${representative.twitter_account}`} />
@@ -93,7 +95,7 @@ class RepShow extends Component {
                 </p>
                 </div>
               </div>)
-          }</p>
+          }
         </div>
         <div className="voteShow">
           {this.renderVotes()}

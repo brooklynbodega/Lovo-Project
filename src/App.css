@@ -159,13 +159,37 @@ form {
 /* SENATOR SHOW STYLING */
 
 .SenatorContainer {
-  
+  display: flex;
+  padding: 10px;
+
 }
 
 .SenatorImage {
-  align-content: left;
+  margin-right: 20px;
+  box-shadow: 6px 6px 6px black; 
 }
 
+.SenatorDetails {
+  /* align-content: left; */
+}
+/* ********************* */
+
+/* REPRESENTATIVE SHOW STYLING */
+
+.RepContainer {
+  display: flex;
+  padding: 10px;
+
+}
+
+.RepImage {
+  margin-right: 20px;
+  box-shadow: 6px 6px 6px black; 
+}
+
+.RepDetails {
+  /* align-content: left; */
+}
 /* ********************* */
 
 /* VOTE SHOW STYLING */
