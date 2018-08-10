@@ -156,7 +156,19 @@ form {
 }
 /* ********************* */
 
-/* SHOW STYLING */
+/* SENATOR SHOW STYLING */
+
+.SenatorContainer {
+  
+}
+
+.SenatorImage {
+  align-content: left;
+}
+
+/* ********************* */
+
+/* VOTE SHOW STYLING */
 .voteShow {
   /* display: flex; */
   border: 2px solid black;

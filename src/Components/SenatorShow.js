@@ -78,15 +78,15 @@ class SenatorShow extends Component {
       <div className="SenatorShow">
       {/* Ryan Hikel assisted with rendering my senator image to the page */}
       <div className="SenatorContainer">
-        <img alt={senator.id} className='senatorImage' src={`http://bioguide.congress.gov/bioguide/photo/${this.props.member.replace('.json', '').charAt(0)}/${this.props.member.replace('.json', '')}.jpg`} />
-      <h3>{senator.first_name} {senator.last_name}</h3>
-      <p>{senator.current_party}</p>
-      <p>{senator.title}</p>
+        <div className='SenatorImage'>
+        <img alt={senator.id} src={`http://bioguide.congress.gov/bioguide/photo/${this.props.member.replace('.json', '').charAt(0)}/${this.props.member.replace('.json', '')}.jpg`} />
+        </div>
+      <p></p>
         {/* Ryan also assisted in putting my roles to the page */}
       <p>{
         (roles !== null) && (
           <div>
-          <p>{roles.state}</p>
+            <h3>{senator.first_name} {senator.last_name} ({senator.current_party}-{roles.state})</h3>
           <p>{roles.title}</p>
           <p>{roles.phone}</p>
           <div className="icons">
