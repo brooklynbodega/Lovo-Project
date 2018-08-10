@@ -39,8 +39,8 @@ class ListSenators extends Component {
     return (
       this.state.allSenators.map(senator => {
       return (
-        <div className="senatorData">
-        <img alt={senator.id} className='senatorImage' src={`http://bioguide.congress.gov/bioguide/photo/${senator.id.charAt(0)}/${senator.id}.jpg`} />
+        <div className="SenatorData">
+        <img alt={senator.id} className="SenatorImage" src={`http://bioguide.congress.gov/bioguide/photo/${senator.id.charAt(0)}/${senator.id}.jpg`} />
         <Link to={`senators/${senator.id}.json`}>
           <h3>{senator.first_name} {senator.last_name}</h3>
         </Link>

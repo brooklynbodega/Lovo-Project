@@ -37,7 +37,7 @@ class ListHouseReps extends Component {
     return this.state.allReps.map(representative => {
       return (
         <div className="repData">
-        <img alt={representative.id} className='representativeImage' src={`http://bioguide.congress.gov/bioguide/photo/${representative.id.charAt(0)}/${representative.id}.jpg`} />
+        <img alt={representative.id} className="RepImage" src={`http://bioguide.congress.gov/bioguide/photo/${representative.id.charAt(0)}/${representative.id}.jpg`} />
           <Link to={`representatives/${representative.id}.json`}>
           <h3>{representative.first_name} {representative.last_name}</h3>
           </Link>
