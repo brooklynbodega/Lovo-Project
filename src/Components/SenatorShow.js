@@ -15,7 +15,8 @@ class SenatorShow extends Component {
     this.state = ({
       senator: '',
       roles: null,
-      votes: []
+      votes: [],
+      statements: []
     })
   }
 
@@ -23,6 +24,8 @@ class SenatorShow extends Component {
     // Upload the function to display a single senator's information
     let senator = this.props.member.replace('.json', '');
     console.log(senator);
+    // let congress = this.props.member.replace('.json', '');
+    // console.log(congress);
     fetch(`https://api.propublica.org/congress/v1/members/${senator}.json`, {
         headers: {
           ['X-API-Key']: api_keys.PROPUB_CONG_KEY
@@ -42,19 +45,41 @@ class SenatorShow extends Component {
         .then(senatorVotes => this.setState({
           votes: senatorVotes.results[0].votes
         })))
+      .then(fetch(`https://api.propublica.org/congress/v1/members/${senator}/statements/115.json`, {
+        headers: {
+          ['X-API-Key']: api_keys.PROPUB_CONG_KEY
+        }
+      })
+        .then(response => response.json())
+        .then(senatorStatements => this.setState({
+          statements: senatorStatements.results
+        })))
   }
 
   renderVotes() {
     return (
       this.state.votes.map(vote => {
       return (
-        <div className="voteData">
+        <div className="VoteData">
         <p>{vote.description}</p>
         <p>{vote.date}</p>
          Result: {vote.result} Yeas: {vote.total.yes} Nays: {vote.total.no}
         {vote.position === 'Yes' ?
-        <p class="votePosition">{this.state.senator.first_name} voted yes 👍</p> :
-        <p class="votePosition">{this.state.senator.first_name} voted no 👎</p> }
+        <p class="VotePosition">{this.state.senator.first_name} voted yes 👍</p> :
+        <p class="VotePosition">{this.state.senator.first_name} voted no 👎</p> }
+        </div>
+      )
+    }))
+
+  }
+  
+  renderStatements() {
+    return (
+      this.state.statements.map(statement => {
+      return (
+        <div className="StatementData">
+        <p>{statement.title}</p>
+        <p>{statement.date}</p>
         </div>
       )
     }))
@@ -66,6 +91,8 @@ class SenatorShow extends Component {
     console.log(roles);
     let votes = this.state.votes;
     console.log(votes);
+    let statements = this.state.statements;
+    console.log(statements);
     
     // An attempt to render "Republican" or "Democrat" instead of "D" or "R"
     // if (senator.current_party == "D") {
@@ -104,9 +131,13 @@ class SenatorShow extends Component {
           </div>)
       }
       </div>
-      <div className="voteShow">
+      <h3>Vote Positions</h3>
+      <div className="VoteShow">
         {this.renderVotes()}
-        {/* <p>{votes.description}</p> */}
+      </div>
+      <h3>Statements</h3>
+      <div className="StatementShow">
+        {this.renderStatements()}
       </div>
       </div>
     )

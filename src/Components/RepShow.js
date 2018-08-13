@@ -15,7 +15,8 @@ class RepShow extends Component {
     this.state = ({
       representative: '',
       roles: null,
-      votes: []
+      votes: [],
+      statements: []
     })
   }
 
@@ -42,19 +43,41 @@ class RepShow extends Component {
         .then(senatorVotes => this.setState({
           votes: senatorVotes.results[0].votes
         })))
+        .then(fetch(`https://api.propublica.org/congress/v1/members/${representative}/statements/115.json`, {
+            headers: {
+              ['X-API-Key']: api_keys.PROPUB_CONG_KEY
+            }
+          })
+          .then(response => response.json())
+          .then(senatorStatements => this.setState({
+            statements: senatorStatements.results
+          })))
   }
+
 
   renderVotes() {
     return (
       this.state.votes.map(vote => {
       return (
-        <div className="voteData">
+        <div className="VoteData">
         <p>{vote.description}</p>
         <p>{vote.date}</p>
          Result: {vote.result} Yeas: {vote.total.yes} Nays: {vote.total.no}
         {vote.position === 'Yes' ?
-        <p class="votePosition">{this.state.representative.first_name} voted yes 👍</p> :
-        <p class="votePosition">{this.state.representative.first_name} voted no 👎</p> }
+        <p class="VotePosition">{this.state.representative.first_name} voted yes 👍</p> :
+        <p class="VotePosition">{this.state.representative.first_name} voted no 👎</p> }
+        </div>
+      )
+    }))
+  }
+
+  renderStatements() {
+    return (
+      this.state.statements.map(statement => {
+      return (
+        <div className="StatementData">
+        <p>{statement.title}</p>
+        <p>{statement.date}</p>
         </div>
       )
     }))
@@ -66,6 +89,8 @@ class RepShow extends Component {
     console.log(roles);
     let votes = this.state.votes;
     console.log(votes);
+    let statements = this.state.statements;
+    console.log(statements);
 
     return (
       <div className="RepShow">
@@ -97,9 +122,14 @@ class RepShow extends Component {
               </div>)
           }
         </div>
-        <div className="voteShow">
-          {this.renderVotes()}
-        </div>
+     <h3>Vote Positions</h3>
+      <div className="VoteShow">
+        {this.renderVotes()}
+      </div>
+      <h3>Statements</h3>
+      <div className="StatementShow">
+        {this.renderStatements()}
+      </div>
       </div>
     )
   }

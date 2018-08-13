@@ -193,8 +193,7 @@ form {
 /* ********************* */
 
 /* VOTE SHOW STYLING */
-.voteShow {
-  /* display: flex; */
+.VoteShow {
   border: 2px solid black;
   border-radius: 4px;
   max-height: 300px;
@@ -202,8 +201,18 @@ form {
   margin: 0 10px 20px 10px;
 }
 
-.votePosition {
+.VotePosition {
   font-weight: 600;
+}
+/* ********************* */
+
+/* STATEMENT SHOW STYLING */
+.StatementShow {
+  border: 2px solid black;
+  border-radius: 4px;
+  max-height: 300px;
+  overflow: auto;
+  margin: 0 10px 20px 10px;
 }
 /* ********************* */
 
