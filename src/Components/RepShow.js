@@ -16,7 +16,8 @@ class RepShow extends Component {
       representative: '',
       roles: null,
       votes: [],
-      statements: []
+      statements: [],
+      bills: []
     })
   }
 
@@ -40,8 +41,8 @@ class RepShow extends Component {
           }
         })
         .then(response => response.json())
-        .then(senatorVotes => this.setState({
-          votes: senatorVotes.results[0].votes
+        .then(representativeVotes => this.setState({
+          votes: representativeVotes.results[0].votes
         })))
         .then(fetch(`https://api.propublica.org/congress/v1/members/${representative}/statements/115.json`, {
             headers: {
@@ -49,9 +50,18 @@ class RepShow extends Component {
             }
           })
           .then(response => response.json())
-          .then(senatorStatements => this.setState({
-            statements: senatorStatements.results
+          .then(representativeStatements => this.setState({
+            statements: representativeStatements.results
           })))
+          .then(fetch(`https://api.propublica.org/congress/v1/members/${representative}/bills/introduced.json`, {
+              headers: {
+                ['X-API-Key']: api_keys.PROPUB_CONG_KEY
+              }
+            })
+            .then(response => response.json())
+            .then(bills => this.setState({
+              bills: bills.results
+            })))
   }
 
 
@@ -82,7 +92,26 @@ class RepShow extends Component {
       )
     }))
   }
-
+ 
+  renderBills() {
+      if (this.state.bills === true) {
+        this.state.bills.map(bill => {
+          return (
+          <div className="BillData">
+          <p>{bill.short_title} {bill.number}</p>
+          <p>{bill.introduced_date}</p>
+          <p>{bill.primary_subject}</p>
+          </div>
+          )})
+        }
+        else {
+          return (
+            <div className="BillData">
+              <p>{this.state.representative.first_name} {this.state.representative.last_name} has not introduced any bills.</p>
+            </div>
+          )
+        }
+  }
   render() {
     let representative = this.state.representative;
     let roles = this.state.roles;
@@ -91,6 +120,8 @@ class RepShow extends Component {
     console.log(votes);
     let statements = this.state.statements;
     console.log(statements);
+    let bills = this.state.bills;
+    console.log(bills);
 
     return (
       <div className="RepShow">
@@ -122,14 +153,26 @@ class RepShow extends Component {
               </div>)
           }
         </div>
-     <h3>Vote Positions</h3>
-      <div className="VoteShow">
-        {this.renderVotes()}
-      </div>
-      <h3>Statements</h3>
-      <div className="StatementShow">
-        {this.renderStatements()}
-      </div>
+        <div className="FeedContainer">
+          <div id="VoteContainer">
+            <h3 id="VoteTitle" className="FeedTitle">Vote Positions</h3>
+            <div id="VoteFeed" className="Feed">
+              {this.renderVotes()}
+            </div>
+          </div>
+          <div id="StatementContainer">
+          <h3 id="StatementTitle" className="FeedTitle">Statements</h3>
+          <div id="StatementFeed" className="Feed">
+            {this.renderStatements()}
+          </div>
+         </div>
+         <div id="BillContainer">
+          <h3 id="BillTitle" className="FeedTitle">Bills</h3>
+          <div id="BillFeed" className="Feed">
+            {this.renderBills()}
+         </div>
+         </div>
+        </div>
       </div>
     )
   }
