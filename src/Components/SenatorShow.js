@@ -96,16 +96,23 @@ class SenatorShow extends Component {
   }
   
   renderBills() {
-    return (
-      this.state.bills.map(bill => {
-      return (
-        <div className="BillData">
-        <p>{bill.short_title} {bill.number}</p>
-        <p>{bill.introduced_date}</p>
-        <p>{bill.primary_subject}</p>
-        </div>
-      )
-    }))
+      if (this.state.bills === true) {
+        this.state.bills.map(bill => {
+          return (
+          <div className="BillData">
+          <p>{bill.short_title} {bill.number}</p>
+          <p>{bill.introduced_date}</p>
+          <p>{bill.primary_subject}</p>
+          </div>
+          )})
+        }
+        else {
+          return (
+            <div className="BillData">
+              <p>{this.state.senator.first_name} {this.state.senator.last_name} has not introduced any bills.</p>
+            </div>
+          )
+        }
   }
 
   render() {
@@ -155,22 +162,22 @@ class SenatorShow extends Component {
           </div>)
         }
         </div>
-        <div className="Feed">
+        <div className="FeedContainer">
           <div id="VoteContainer">
-            <h3 id="VoteTitle">Vote Positions</h3>
-            <div id="VoteFeed">
+            <h3 id="VoteTitle" className="FeedTitle">Vote Positions</h3>
+            <div id="VoteFeed" className="Feed">
               {this.renderVotes()}
             </div>
           </div>
           <div id="StatementContainer">
-          <h3 id="StatementTitle">Statements</h3>
-          <div id="StatementFeed">
+          <h3 id="StatementTitle" className="FeedTitle">Statements</h3>
+          <div id="StatementFeed" className="Feed">
             {this.renderStatements()}
           </div>
          </div>
          <div id="BillContainer">
-          <h3 id="BillTitle">Bills</h3>
-          <div id="BillFeed">
+          <h3 id="BillTitle" className="FeedTitle">Bills</h3>
+          <div id="BillFeed" className="Feed">
             {this.renderBills()}
          </div>
          </div>

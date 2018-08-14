@@ -194,50 +194,50 @@ form {
 
 /* FEED STYLING */
 
-.Feed {
+.FeedContainer {
   display: grid;
   grid-template-columns: auto auto ;
   grid-template-rows: auto auto ;
   grid-gap: 10px;
 }
 
-/* VOTE SHOW STYLING */
-#VoteTitle {
-  position: sticky;
-}
-
-#VoteFeed {
+.Feed {
   border: 2px solid black;
   border-radius: 4px;
-  max-height: 300px;
+  min-height: 300px;
+  max-height: 310px;
   overflow: auto;
   margin: 0 10px 20px 10px;
   padding: 0 5px 5px 5px;
+}
+
+.FeedTitle {
+  font-weight: 600;
+}
+/* ********************* */
+
+/* VOTE SHOW STYLING */
+#VoteTitle {
+}
+
+#VoteFeed {
 }
 
 /* ********************* */
 
 /* STATEMENT SHOW STYLING */
 #StatementTitle {
-  font-weight: 600;
 }
 
 #StatementFeed {
-  border: 2px solid black;
-  border-radius: 4px;
-  max-height: 300px;
-  overflow: auto;
-  margin: 0 10px 20px 10px;
 }
 /* ********************* */
 
 /* BILL SHOW STYLING */
+#BillTitle{
+}
+
 #BillFeed{
-  border: 2px solid black;
-  border-radius: 4px;
-  max-height: 300px;
-  overflow: auto;
-  margin: 0 10px 20px 10px;
 }
 /* ********************* */
 
