@@ -16,7 +16,8 @@ class SenatorShow extends Component {
       senator: '',
       roles: null,
       votes: [],
-      statements: []
+      statements: [],
+      bills: []
     })
   }
 
@@ -54,6 +55,15 @@ class SenatorShow extends Component {
         .then(senatorStatements => this.setState({
           statements: senatorStatements.results
         })))
+      .then(fetch(`https://api.propublica.org/congress/v1/members/${senator}/bills/introduced.json`, {
+        headers: {
+          ['X-API-Key']: api_keys.PROPUB_CONG_KEY
+        }
+      })
+        .then(response => response.json())
+        .then(bills => this.setState({
+          bills: bills.results
+        })))
   }
 
   renderVotes() {
@@ -84,6 +94,19 @@ class SenatorShow extends Component {
       )
     }))
   }
+  
+  renderBills() {
+    return (
+      this.state.bills.map(bill => {
+      return (
+        <div className="BillData">
+        <p>{bill.short_title} {bill.number}</p>
+        <p>{bill.introduced_date}</p>
+        <p>{bill.primary_subject}</p>
+        </div>
+      )
+    }))
+  }
 
   render() {
     let senator = this.state.senator;
@@ -93,6 +116,8 @@ class SenatorShow extends Component {
     console.log(votes);
     let statements = this.state.statements;
     console.log(statements);
+    let bills = this.state.bills;
+    console.log(bills);
     
     // An attempt to render "Republican" or "Democrat" instead of "D" or "R"
     // if (senator.current_party == "D") {
@@ -104,41 +129,52 @@ class SenatorShow extends Component {
     return (
       <div className="SenatorShow">
       {/* Ryan Hikel assisted with rendering my senator image to the page */}
-      <div className="SenatorContainer">
-        <div className="SenatorImage">
-          <img alt={senator.id} src={`http://bioguide.congress.gov/bioguide/photo/${this.props.member.replace('.json', '').charAt(0)}/${this.props.member.replace('.json', '')}.jpg`} />
-        </div>
-        {/* Ryan also assisted in putting my roles to the page */}
-        {
-        (roles !== null) && (
-          <div className="SenatorDetails">
-            <h3>
-            {senator.first_name} {senator.last_name} ({senator.current_party}-{roles.state})</h3>
-          <p>{roles.title}</p>
-          <p>{roles.phone}</p>
-          <div className="icons">
-            <p>
-              <SocialIcon url={`${roles.contact_form}`} />
-            {/* <a href={`${roles.contact_form}`} target="_blank"><p>Contact Form</a> */}
-            </p>
-            <p>
-              <SocialIcon url={`https://twitter.com/${senator.twitter_account}`} />
-            </p>
-            <p>
-            <SocialIcon url={`https://facebook.com/${senator.facebook_account}`} />
-            </p>
+        <div className="SenatorContainer">
+          <div className="SenatorImage">
+            <img alt={senator.id} src={`http://bioguide.congress.gov/bioguide/photo/${this.props.member.replace('.json', '').charAt(0)}/${this.props.member.replace('.json', '')}.jpg`} />
           </div>
+          {/* Ryan also assisted in putting my roles to the page */}
+         {
+         (roles !== null) && (
+          <div className="SenatorDetails">
+              <h3>
+                {senator.first_name} {senator.last_name} ({senator.current_party}-{roles.state})</h3>
+            <p>{roles.title}</p>
+            <p>{roles.phone}</p>
+            <div className="icons">
+              <p>
+                <SocialIcon url={`${roles.contact_form}`} />
+              </p>
+              <p>
+                <SocialIcon url={`https://twitter.com/${senator.twitter_account}`} />
+              </p>
+              <p>
+              <SocialIcon url={`https://facebook.com/${senator.facebook_account}`} />
+              </p>
+            </div>
           </div>)
-      }
-      </div>
-      <h3>Vote Positions</h3>
-      <div className="VoteShow">
-        {this.renderVotes()}
-      </div>
-      <h3>Statements</h3>
-      <div className="StatementShow">
-        {this.renderStatements()}
-      </div>
+        }
+        </div>
+        <div className="Feed">
+          <div id="VoteContainer">
+            <h3 id="VoteTitle">Vote Positions</h3>
+            <div id="VoteFeed">
+              {this.renderVotes()}
+            </div>
+          </div>
+          <div id="StatementContainer">
+          <h3 id="StatementTitle">Statements</h3>
+          <div id="StatementFeed">
+            {this.renderStatements()}
+          </div>
+         </div>
+         <div id="BillContainer">
+          <h3 id="BillTitle">Bills</h3>
+          <div id="BillFeed">
+            {this.renderBills()}
+         </div>
+         </div>
+        </div>
       </div>
     )
   }
