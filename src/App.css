@@ -234,6 +234,9 @@ form {
 /* ********************* */
 
 /* BILL SHOW STYLING */
+#BillContainer {
+  /* grid-column-start: span 2; */
+}
 #BillTitle{
 }
 

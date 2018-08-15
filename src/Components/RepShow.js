@@ -95,7 +95,7 @@ class RepShow extends Component {
  
   renderBills() {
       if (this.state.bills === true) {
-        this.state.bills.map(bill => {
+        return this.state.bills.map(bill => {
           return (
           <div className="BillData">
           <p>{bill.short_title} {bill.number}</p>
@@ -112,6 +112,7 @@ class RepShow extends Component {
           )
         }
   }
+  
   render() {
     let representative = this.state.representative;
     let roles = this.state.roles;
