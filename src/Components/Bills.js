@@ -2,6 +2,17 @@ import React, { Component } from 'react';
 import '../App.css';
 
 class Bills extends Component {
+constructor(props) {
+  super(props)
+  this.state = {
+     bills: ""
+  }
+}
+
+componentDidMount() {
+  
+}
+
  render () {
     return (
       <div className="Bills">

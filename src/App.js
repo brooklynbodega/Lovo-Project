@@ -3,9 +3,9 @@ import { Switch } from 'react-router-dom';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Header from './Components/Header';
 import HomePage from './Components/HomePage';
-import ListSenators from './Components/ListSenators'
-import ListHouseReps from './Components/ListHouseReps'
-import SearchForm from './Components/SearchForm';
+import ListSenators from './Components/ListSenators';
+import ListHouseReps from './Components/ListHouseReps';
+import SearchFormLocal from './Components/SearchFormLocal';
 import SenatorShow from './Components/SenatorShow';
 import Expenses from './Components/Expenses';
 import Bills from './Components/Bills';
@@ -19,7 +19,7 @@ class App extends Component {
       <div className="App">
       <Header />
             <Route exact path='/' component={HomePage}/>
-            <Route exact path='/find-reps' component={SearchForm}/>
+            <Route exact path='/find-reps' component={SearchFormLocal}/>
             <Route exact path='/senators' component={ListSenators}/>
             <Route exact path='/representatives' component={ListHouseReps}/>
             <Route exact path='/expenses' component={Expenses}/>

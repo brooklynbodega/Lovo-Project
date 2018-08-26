@@ -6,7 +6,7 @@ The code for http: //myreps.datamade.us/index.html assisted me with the setup of
 specifically Lines 18-20 and 42-57.
 */
 
-class SearchForm extends Component {
+class SearchFormLocal extends Component {
   constructor(props) {
     super(props)
 
@@ -60,7 +60,7 @@ class SearchForm extends Component {
   render() {
       
     return (
-      <div className="SearchForm">
+      <div className="SearchFormLocal">
         <div className="input-address">
           <form onSubmit={this.onFormSubmit}>
             <input onChange={this.onInputChange} value={this.state.address} name="address" placeholder="Enter Address"></input>
@@ -78,4 +78,4 @@ class SearchForm extends Component {
   }
 }
 
-export default SearchForm;
+export default SearchFormLocal;

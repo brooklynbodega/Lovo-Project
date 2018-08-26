@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SearchForm from './SearchForm';
+import SearchFormLocal from './SearchFormLocal';
 import '../App.css';
 
 class HomePage extends Component {
@@ -8,7 +8,7 @@ class HomePage extends Component {
       <div className="HomePage">
         <div className="main">
         {/* create function here to save address to state */}
-          <SearchForm onFormSubmit={(address) => {}} />
+          <SearchFormLocal onFormSubmit={(address) => {}} />
         </div>
       </div>
     );
