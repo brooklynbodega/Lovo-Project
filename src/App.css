@@ -196,9 +196,10 @@ form {
 
 .FeedContainer {
   display: grid;
-  grid-template-columns: auto auto ;
-  grid-template-rows: auto auto ;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
   grid-gap: 10px;
+  margin: 10px;
 }
 
 .Feed {
@@ -206,6 +207,8 @@ form {
   border-radius: 4px;
   min-height: 300px;
   max-height: 310px;
+  /* min-width: 50%;
+  max-width: 50.01%; */
   overflow: auto;
   margin: 0 10px 20px 10px;
   padding: 0 5px 5px 5px;

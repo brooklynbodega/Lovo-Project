@@ -13,11 +13,12 @@ class RepShow extends Component {
   constructor(props) {
     super(props)
     this.state = ({
-      representative: '',
+      representative: "",
       roles: null,
       votes: [],
       statements: [],
-      bills: []
+      bills: [],
+      cosponsored: []
     })
   }
 
@@ -61,9 +62,20 @@ class RepShow extends Component {
             .then(response => response.json())
             .then(bills => this.setState({
               bills: bills.results
-            })))
+        })))
+      .then(fetch(
+        `https://api.propublica.org/congress/v1/members/${representative}/bills/cosponsored.json`,
+        {
+          headers: {
+            ["X-API-Key"]: api_keys.PROPUB_CONG_KEY
+          }
+        }
+      )
+        .then(response => response.json())
+        .then(cosponsored => this.setState({
+          cosponsored: cosponsored.results
+        })));
   }
-
 
   renderVotes() {
     return (
@@ -82,6 +94,9 @@ class RepShow extends Component {
   }
 
   renderStatements() {
+    console.log(this.state.statements);
+    
+    if (this.state.statements !== []) {
     return (
       this.state.statements.map(statement => {
       return (
@@ -92,17 +107,26 @@ class RepShow extends Component {
       )
     }))
   }
+    else {
+      return (
+        <div className="StatementData">
+          <p>{this.state.representative.first_name} {this.state.representative.last_name} has no recent statements.</p>
+        </div>
+      )
+    }
+  }
  
   renderBills() {
-      if (this.state.bills === true) {
-        return this.state.bills.map(bill => {
+      if (this.state.bills !== []) {
+        return (
+          this.state.bills.map(bill => {
           return (
           <div className="BillData">
           <p>{bill.short_title} {bill.number}</p>
           <p>{bill.introduced_date}</p>
           <p>{bill.primary_subject}</p>
           </div>
-          )})
+          )}))
         }
         else {
           return (
@@ -111,6 +135,27 @@ class RepShow extends Component {
             </div>
           )
         }
+  }
+
+  renderCosponsoredBills() {
+    if (this.state.cosponsored !== []) {
+      return this.state.cosponsored.map(cosponsor => {
+        return (
+          <div className="CosponsorData">
+            <p>{cosponsor.number} : {cosponsor.short_title}</p>
+            <p>{cosponsor.introduced_date}</p>
+            <p>{cosponsor.primary_subject}</p>
+          </div>
+        )
+      })
+    }
+    else {
+      return (
+        <div className="BillData">
+          <p>{this.state.representative.first_name} {this.state.representative.last_name} has not cosponsored any bills.</p>
+        </div>
+      )
+    }
   }
   
   render() {
@@ -123,6 +168,8 @@ class RepShow extends Component {
     console.log(statements);
     let bills = this.state.bills;
     console.log(bills);
+    let cosponsored = this.state.cosponsored;
+    console.log(cosponsored);
 
     return (
       <div className="RepShow">
@@ -156,23 +203,37 @@ class RepShow extends Component {
         </div>
         <div className="FeedContainer">
           <div id="VoteContainer">
-            <h3 id="VoteTitle" className="FeedTitle">Vote Positions</h3>
+            <h3 id="VoteTitle" className="FeedTitle">
+              Vote Positions
+            </h3>
             <div id="VoteFeed" className="Feed">
               {this.renderVotes()}
             </div>
           </div>
           <div id="StatementContainer">
-          <h3 id="StatementTitle" className="FeedTitle">Statements</h3>
-          <div id="StatementFeed" className="Feed">
-            {this.renderStatements()}
+            <h3 id="StatementTitle" className="FeedTitle">
+              Statements
+            </h3>
+            <div id="StatementFeed" className="Feed">
+              {this.renderStatements()}
+            </div>
           </div>
-         </div>
-         <div id="BillContainer">
-          <h3 id="BillTitle" className="FeedTitle">Bills</h3>
-          <div id="BillFeed" className="Feed">
-            {this.renderBills()}
-         </div>
-         </div>
+          <div id="BillContainer">
+            <h3 id="BillTitle" className="FeedTitle">
+              Bills
+            </h3>
+            <div id="BillFeed" className="Feed">
+              {this.renderBills()}
+            </div>
+          </div>
+          <div id="CosponsoredContainer">
+            <h3 id="CosponsoredTitle" className="FeedTitle">
+              Cosponsored Bills
+            </h3>
+            <div id="CosponsoredFeed" className="Feed">
+              {this.renderCosponsoredBills()}
+            </div>
+          </div>
         </div>
       </div>
     )

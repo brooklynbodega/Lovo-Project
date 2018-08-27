@@ -17,7 +17,8 @@ class SenatorShow extends Component {
       roles: null,
       votes: [],
       statements: [],
-      bills: []
+      bills: [],
+      cosponsored: []
     };
   }
 
@@ -118,19 +119,30 @@ class SenatorShow extends Component {
   }
 
   renderStatements() {
-    return this.state.statements.map(statement => {
+    if (this.state.statements !== []) {
+      return (
+        this.state.statements.map(statement => {
+          return (
+            <div className="StatementData">
+              <p>{statement.title}</p>
+              <p>{statement.date}</p>
+            </div>
+          )
+        }))
+    }
+    else {
       return (
         <div className="StatementData">
-          <p>{statement.title}</p>
-          <p>{statement.date}</p>
+          <p>{this.state.senator.first_name} {this.state.senator.last_name} has no recent statements.</p>
         </div>
-      );
-    });
+      )
+    }
   }
 
   renderBills() {
     if (this.state.bills === true) {
-      return this.state.bills.map(bill => {
+      return (
+        this.state.bills.map(bill => {
         return (
           <div className="BillData">
             <p>{bill.number} : {bill.short_title}</p>
@@ -138,7 +150,7 @@ class SenatorShow extends Component {
             <p>{bill.primary_subject}</p>
           </div>
         )
-      })
+      }))
     }
     else {
       return (

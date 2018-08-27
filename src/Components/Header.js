@@ -11,7 +11,7 @@ class Header extends Component {
       <h4>The information hub for the local voter</h4>
       </header>
       <div className="NavBar">
-        <Link to='/find-reps' >
+        <Link to='/find-local-reps' >
         <button>Search</button>
         </Link><span> </span>
         <Link to='/senators' >
